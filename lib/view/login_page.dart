@@ -1,10 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:food_hub/view/dashboard_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+
+    void handleLogin() {
+      String email = emailController.text;
+      String password = passwordController.text;
+
+      if (email == 'admin' && password == 'admin') {
+        // Show success Snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login successful!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        // Navigate to the Dashboard
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DashboardPage()),
+        );
+      } else {
+        // Show error Snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Invalid email or password!'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: ConstrainedBox(
@@ -49,6 +81,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 20),
                       // Email Field
                       TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           labelText: 'E-mail',
                           border: OutlineInputBorder(
@@ -60,6 +93,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 15),
                       // Password Field
                       TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
@@ -81,7 +115,7 @@ class LoginPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                         ),
-                        onPressed: () {},
+                        onPressed: handleLogin,
                         child: const Text(
                           'LOGIN',
                           style: TextStyle(color: Colors.white, fontSize: 16),
@@ -90,7 +124,9 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 15),
                       // Sign Up Link
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/signup');
+                        },
                         child: const Text(
                           'Don’t have an account? Sign Up',
                           style: TextStyle(color: Colors.orange),
@@ -136,3 +172,4 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+// Dashboard Page Example

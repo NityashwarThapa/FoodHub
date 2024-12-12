@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_hub/view/dashboard_page.dart';
 import 'package:food_hub/view/login_page.dart';
 import 'package:food_hub/view/onboarding_page.dart';
 import 'package:food_hub/view/signup_page.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
             const SplashScreen(), // SplashScreen is the first screen
         '/onboarding': (context) => const OnboardingPage(),
         '/signup': (context) => const SignUpPage(), // Onboarding screen
-        '/login': (context) => const LoginPage()
+        '/login': (context) => const LoginPage(),
+        '/dashbaord': (context) => const DashboardPage()
       },
     );
   }
