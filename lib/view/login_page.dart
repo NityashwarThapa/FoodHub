@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +40,13 @@ class SignUpPage extends StatelessWidget {
                       const SizedBox(height: 150),
                       // Title
                       const Text(
-                        'Sign Up',
+                        'Login',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Full Name Field
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Full name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(color: Colors.orange),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
                       // Email Field
                       TextField(
                         decoration: InputDecoration(
@@ -82,7 +71,7 @@ class SignUpPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 25),
-                      // Sign Up Button
+                      // Login Button
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.redAccent,
@@ -92,30 +81,25 @@ class SignUpPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                         ),
-                        onPressed: () {
-                          // Add Sign Up functionality here
-                        },
+                        onPressed: () {},
                         child: const Text(
-                          'SIGN UP',
+                          'LOGIN',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
                       const SizedBox(height: 15),
-                      // Login Link
+                      // Sign Up Link
                       TextButton(
-                        onPressed: () {
-                          // Navigate to the Login Page
-                          Navigator.pushNamed(context, '/login');
-                        },
+                        onPressed: () {},
                         child: const Text(
-                          'Already have an account? Login',
+                          'Don’t have an account? Sign Up',
                           style: TextStyle(color: Colors.orange),
                         ),
                       ),
                       const SizedBox(height: 50),
                       // Social Media Login
                       const Text(
-                        'Sign up with',
+                        'Login with',
                         style: TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(height: 15),
@@ -123,9 +107,7 @@ class SignUpPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              // Handle Facebook Sign Up
-                            },
+                            onTap: () {},
                             child: const CircleAvatar(
                               radius: 25,
                               backgroundImage:
@@ -133,9 +115,7 @@ class SignUpPage extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
-                              // Handle Google Sign Up
-                            },
+                            onTap: () {},
                             child: const CircleAvatar(
                               radius: 25,
                               backgroundImage:

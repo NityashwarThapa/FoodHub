@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_hub/view/dashboard_page.dart';
+import 'package:food_hub/view/login_page.dart';
 import 'package:food_hub/view/onboarding_page.dart';
 import 'package:food_hub/view/signup_page.dart';
 import 'package:food_hub/view/splash_screen.dart';
@@ -9,9 +9,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: OnboardingPage(),
+      initialRoute: '/', // Set SplashScreen as the initial route
+      routes: {
+        '/': (context) =>
+            const SplashScreen(), // SplashScreen is the first screen
+        '/onboarding': (context) => const OnboardingPage(),
+        '/signup': (context) => const SignUpPage(), // Onboarding screen
+        '/login': (context) => const LoginPage()
+      },
     );
   }
 }

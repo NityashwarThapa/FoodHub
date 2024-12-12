@@ -5,6 +5,11 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Navigate to the OnboardingPage after 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/onboarding');
+    });
+
     return Scaffold(
       backgroundColor: Colors.white, // White background color
       body: Center(
@@ -12,7 +17,7 @@ class SplashScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.width *
               3.0, // Larger height dynamically scaled
           width: MediaQuery.of(context).size.width *
-              3.0, // Larger width dynamically scaled
+              4.0, // Larger width dynamically scaled
           child: Image.asset(
             'assets/images/logo.png', // Path to the logo
             fit: BoxFit.contain,

@@ -33,7 +33,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     _currentPage = index;
                   });
                 },
-                itemCount: 2, // Only 2 screens
+                itemCount: onboardingData.length,
                 itemBuilder: (context, index) {
                   return _buildOnboardingContent(
                     image: 'assets/images/onboarding_${index + 1}.png',
@@ -60,14 +60,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
       child: Column(
         children: [
           Expanded(
-            flex: 5, // Allocate most of the space for the image
+            flex: 5,
             child: Image.asset(
               image,
-              fit: BoxFit.contain, // Ensures the image scales well
+              fit: BoxFit.contain,
             ),
           ),
           Expanded(
-            flex: 2, // Allocate space for the text
+            flex: 2,
             child: Column(
               children: [
                 Text(
@@ -103,11 +103,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
-              2, // Only 2 dots
+              onboardingData.length,
               (index) => _buildDot(index),
             ),
           ),
-          const SizedBox(height: 20), // Reduced height to bring button up
+          const SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange.shade100,
@@ -117,9 +117,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 90),
             ),
             onPressed: () {
-              if (_currentPage == 1) {
-                // Navigate to Dashboard or SignUp page
+              if (_currentPage == onboardingData.length - 1) {
+                // Navigate to the LoginPage
+                Navigator.pushReplacementNamed(context, '/signup');
               } else {
+                // Go to the next page
                 _pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
@@ -127,7 +129,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
               }
             },
             child: Text(
-              _currentPage == 1 ? 'Get Started' : 'Next',
+              _currentPage == onboardingData.length - 1
+                  ? 'Get Started'
+                  : 'Next',
               style: const TextStyle(fontSize: 16),
             ),
           ),
