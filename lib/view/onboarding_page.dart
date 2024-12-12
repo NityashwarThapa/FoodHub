@@ -33,7 +33,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     _currentPage = index;
                   });
                 },
-                itemCount: 2,
+                itemCount: 2, // Only 2 screens
                 itemBuilder: (context, index) {
                   return _buildOnboardingContent(
                     image: 'assets/images/onboarding_${index + 1}.png',
@@ -58,25 +58,36 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(image, height: 250),
-          const SizedBox(height: 20),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+          Expanded(
+            flex: 5, // Allocate most of the space for the image
+            child: Image.asset(
+              image,
+              fit: BoxFit.contain, // Ensures the image scales well
             ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
+          Expanded(
+            flex: 2, // Allocate space for the text
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -92,21 +103,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
-              3,
+              2, // Only 2 dots
               (index) => _buildDot(index),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 50),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
+              backgroundColor: Colors.orange.shade100,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
             ),
             onPressed: () {
-              if (_currentPage == 2) {
+              if (_currentPage == 1) {
                 // Navigate to Dashboard or SignUp page
               } else {
                 _pageController.nextPage(
@@ -116,7 +127,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               }
             },
             child: Text(
-              _currentPage == 2 ? 'Get Started' : 'Next',
+              _currentPage == 1 ? 'Get Started' : 'Next',
               style: const TextStyle(fontSize: 16),
             ),
           ),
@@ -131,7 +142,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: 10,
       width: _currentPage == index ? 20 : 10,
       decoration: BoxDecoration(
-        color: _currentPage == index ? Colors.redAccent : Colors.grey,
+        color: _currentPage == index ? Colors.orange.shade100 : Colors.grey,
         borderRadius: BorderRadius.circular(10),
       ),
     );
@@ -146,9 +157,5 @@ const List<Map<String, String>> onboardingData = [
   {
     'title': 'Choose Your Meal',
     'description': 'Browse through a variety of cuisines and dishes.',
-  },
-  {
-    'title': 'Fast Delivery',
-    'description': 'Get your food delivered to your doorstep in no time.',
   },
 ];
