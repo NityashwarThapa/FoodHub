@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,51 +37,51 @@ class SignUpPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: 150),
+                      const SizedBox(height: 150),
                       // Title
-                      Text(
+                      const Text(
                         'Sign Up',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // Full Name Field
                       TextField(
                         decoration: InputDecoration(
                           labelText: 'Full name',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.orange),
+                            borderSide: const BorderSide(color: Colors.orange),
                           ),
                         ),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       // Email Field
                       TextField(
                         decoration: InputDecoration(
                           labelText: 'E-mail',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.orange),
+                            borderSide: const BorderSide(color: Colors.orange),
                           ),
                         ),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       // Password Field
                       TextField(
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          suffixIcon: Icon(Icons.visibility),
+                          suffixIcon: const Icon(Icons.visibility),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.orange),
+                            borderSide: const BorderSide(color: Colors.orange),
                           ),
                         ),
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       // Sign Up Button
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -87,37 +89,37 @@ class SignUpPage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                         ),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'SIGN UP',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       // Login Link
                       TextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'Already have an account? Login',
                           style: TextStyle(color: Colors.orange),
                         ),
                       ),
-                      SizedBox(height: 50),
+                      const SizedBox(height: 50),
                       // Social Media Login
-                      Text(
+                      const Text(
                         'Sign up with',
                         style: TextStyle(color: Colors.grey),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GestureDetector(
                             onTap: () {},
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                               radius: 25,
                               backgroundImage:
                                   AssetImage('assets/images/facebook.png'),
@@ -125,7 +127,7 @@ class SignUpPage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {},
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                               radius: 25,
                               backgroundImage:
                                   AssetImage('assets/images/google.png'),
@@ -133,7 +135,7 @@ class SignUpPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

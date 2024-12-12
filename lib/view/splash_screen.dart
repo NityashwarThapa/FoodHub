@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -8,9 +10,9 @@ class SplashScreen extends StatelessWidget {
       body: Center(
         child: SizedBox(
           height: MediaQuery.of(context).size.width *
-              2.0, // Larger height dynamically scaled
+              3.0, // Larger height dynamically scaled
           width: MediaQuery.of(context).size.width *
-              2.0, // Larger width dynamically scaled
+              3.0, // Larger width dynamically scaled
           child: Image.asset(
             'assets/images/logo.png', // Path to the logo
             fit: BoxFit.contain,
