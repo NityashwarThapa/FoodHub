@@ -107,14 +107,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
               (index) => _buildDot(index),
             ),
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 20), // Reduced height to bring button up
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange.shade100,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 90),
             ),
             onPressed: () {
               if (_currentPage == 1) {
