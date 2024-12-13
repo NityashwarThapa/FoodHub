@@ -74,8 +74,8 @@ class DashboardPage extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     child: ListTile(
                       leading: const CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/food.png'),
-                      ),
+                          // backgroundImage: AssetImage('assets/images/food.png'),
+                          ),
                       title: Text('Order #${index + 1}'),
                       subtitle: const Text('Delivery in 30 minutes'),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
