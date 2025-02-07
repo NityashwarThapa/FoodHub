@@ -12,7 +12,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Student Management',
+      title: 'Food Hub',
       theme: AppTheme.getApplicationTheme(isDark: false),
       home: BlocProvider.value(
         value: getIt<SplashCubit>(),

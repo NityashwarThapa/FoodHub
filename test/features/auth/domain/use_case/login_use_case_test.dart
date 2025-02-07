@@ -26,7 +26,7 @@ void main() {
   });
 
   test(
-      'should call the [AuthRepo.login] with correct email and password (anjali@gmail.com, anjali123)',
+      'should call the [AuthRepo.login] with correct email and password (nitu12@gmail.com, nitu123)',
       () async {
     when(() => repository.loginUser(any(), any())).thenAnswer(
       (invocation) async {
