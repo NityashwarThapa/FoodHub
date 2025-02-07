@@ -60,6 +60,7 @@ _initSignupDependencies() async {
   getIt.registerFactory<SignupBloc>(
     () => SignupBloc(
       registerUseCase: getIt(),
+      uploadImageUsecase: getIt(),
     ),
   );
 

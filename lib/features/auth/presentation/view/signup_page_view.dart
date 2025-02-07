@@ -23,7 +23,6 @@ class _SignUpPageState extends State<SignUpPage> {
     if (_formKey.currentState!.validate()) {
       context.read<SignupBloc>().add(
             RegisterUser(
-              context: context,
               name: fnameController.text,
               email: emailController.text,
               phone: phoneController.text,
@@ -57,13 +56,6 @@ class _SignUpPageState extends State<SignUpPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
-                // SizedBox(
-                //   height: 300,
-                //   width: 300,
-                //   child: Image.asset('assets/images/login-i.png',
-                //       fit: BoxFit.cover),
-                // ),
-                const SizedBox(height: 100),
                 const Text(
                   "Create An Account",
                   style: TextStyle(
@@ -74,20 +66,36 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildTextField(fnameController, "Your Name", "Enter your name",
-                    Icons.person),
+                _buildTextField(
+                  fnameController,
+                  "Your Name",
+                  "Enter your name",
+                  Icons.person,
+                  key: const Key('name'),
+                ),
                 const SizedBox(height: 20),
-                _buildTextField(emailController, "Your Email",
-                    "Enter your email", Icons.email),
+                _buildTextField(
+                  emailController,
+                  "Your Email",
+                  "Enter your email",
+                  Icons.email,
+                  key: const Key('email'),
+                ),
                 const SizedBox(height: 20),
-                _buildTextField(phoneController, "Phone Number",
-                    "Enter your phone number", Icons.phone),
+                _buildTextField(
+                  phoneController,
+                  "Phone Number",
+                  "Enter your phone number",
+                  Icons.phone,
+                  key: const Key('phone'),
+                ),
                 const SizedBox(height: 20),
                 _buildPasswordField(),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
+                    key: const Key('signupButton'),
                     onPressed: _registerUser,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 255, 67, 53),
@@ -96,7 +104,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      // klnokelgnr
                     ),
                     child: const Text(
                       "Sign Up",
@@ -141,9 +148,15 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String labelText,
-      String hintText, IconData icon) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String labelText,
+    String hintText,
+    IconData icon, {
+    Key? key,
+  }) {
     return TextFormField(
+      key: key,
       controller: controller,
       decoration: InputDecoration(
         prefixIcon: Icon(icon, size: 18),
@@ -159,6 +172,14 @@ class _SignUpPageState extends State<SignUpPage> {
         if (value == null || value.isEmpty) {
           return 'Please enter $labelText';
         }
+        if (labelText == "Your Email" &&
+            !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+          return 'Enter a valid email';
+        }
+        if (labelText == "Phone Number" &&
+            !RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+          return 'Enter a valid phone number';
+        }
         return null;
       },
     );
@@ -166,6 +187,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _buildPasswordField() {
     return TextFormField(
+      key: const Key('password'),
       controller: passwordController,
       obscureText: !_isPasswordVisible,
       decoration: InputDecoration(
@@ -190,8 +212,8 @@ class _SignUpPageState extends State<SignUpPage> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter password';
-        } else if (value.length < 6) {
-          return 'Password must be at least 6 characters long';
+        } else if (value.length < 8) {
+          return 'Password must be at least 8 characters long';
         }
         return null;
       },
