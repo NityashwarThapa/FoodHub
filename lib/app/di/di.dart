@@ -5,6 +5,7 @@ import 'package:food_hub/features/auth/data/data_source/local_datasource/local_d
 import 'package:food_hub/features/auth/data/data_source/remote_datasource/remote_datasource.dart';
 import 'package:food_hub/features/auth/data/repository/auth_local_repository.dart';
 import 'package:food_hub/features/auth/data/repository/auth_remote_repository.dart';
+import 'package:food_hub/features/auth/domain/use_case/login_use_case.dart';
 import 'package:food_hub/features/auth/domain/use_case/signup_use_case.dart';
 import 'package:food_hub/features/auth/presentation/view_model/login/bloc/login_bloc.dart';
 import 'package:food_hub/features/auth/presentation/view_model/signup/bloc/signup_bloc.dart';
@@ -84,6 +85,7 @@ _initLoginDependencies() async {
   getIt.registerFactory<LoginBloc>(
     () => LoginBloc(
       signupBloc: getIt<SignupBloc>(),
+      loginUseCase: getIt<LoginUsecase>(),
     ),
   );
 }

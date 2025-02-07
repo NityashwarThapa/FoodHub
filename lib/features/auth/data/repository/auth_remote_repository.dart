@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:food_hub/core/error/failure.dart';
 import 'package:food_hub/features/auth/data/data_source/remote_datasource/remote_datasource.dart';
@@ -38,5 +40,11 @@ class AuthRemoteRepository implements IAuthRepository {
     } catch (e) {
       return Left(ApiFailure(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadProfilePicture(File file) {
+    // TODO: implement uploadProfilePicture
+    throw UnimplementedError();
   }
 }
