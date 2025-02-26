@@ -10,12 +10,6 @@ class AuthRemoteDataSource implements IAuthDataSource {
   AuthRemoteDataSource(this._dio);
 
   @override
-  Future<AuthEntity> getCurrentUser() {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
-  }
-
-  @override
   Future<String> loginUser(String email, String password) async {
     try {
       var response = await _dio.post(
@@ -26,17 +20,17 @@ class AuthRemoteDataSource implements IAuthDataSource {
       if (response.statusCode == 200) {
         return response.data['data']['token'];
       } else {
-        throw Exception('Failed to login: ${response.statusMessage}');
+        throw Exception(response.data['msg']);
       }
     } on DioException catch (e) {
       throw Exception('Network error during login: ${e.message}');
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      rethrow;
     }
   }
 
   @override
-  Future<void> registerUser(AuthEntity user) async {
+  Future<String> registerUser(AuthEntity user) async {
     try {
       var userApiModel = AuthApiModel.fromEntity(user);
       var response = await _dio.post(
@@ -44,13 +38,18 @@ class AuthRemoteDataSource implements IAuthDataSource {
         data: userApiModel.toJson(),
       );
 
+      if (response.statusCode == 409) {
+        throw Exception(response.data['msg']);
+      }
+
       if (response.statusCode != 201) {
         throw Exception('Failed to register: ${response.statusMessage}');
       }
+      return response.data['msg'];
     } on DioException catch (e) {
       throw Exception('Network error during registration: ${e.message}');
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      rethrow;
     }
   }
 }

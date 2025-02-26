@@ -99,10 +99,7 @@ _initSignupDependencies() async {
   getIt.registerLazySingleton<IAuthRepository>(() => AuthRemoteRepository(getIt()));
 
   getIt.registerFactory<SignupBloc>(
-    () => SignupBloc(
-      loginBloc: getIt(),
-      registerUseCase: getIt(),
-    ),
+    () => SignupBloc(registerUseCase: getIt()),
   );
 
   //Remote data sourc

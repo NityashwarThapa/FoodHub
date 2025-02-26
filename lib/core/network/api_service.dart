@@ -19,6 +19,9 @@ class ApiService {
         requestBody: true,
         responseHeader: true,
       ))
+      ..options.validateStatus = (status) {
+        return status! < 500;
+      }
       ..options.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

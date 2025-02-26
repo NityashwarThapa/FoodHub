@@ -148,7 +148,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: 10,
       width: _currentPage == index ? 20 : 10,
       decoration: BoxDecoration(
-        color: _currentPage == index ? Colors.orange.shade100 : Colors.grey,
+        color: _currentPage == index ? Colors.orange.shade300 : Colors.grey,
         borderRadius: BorderRadius.circular(10),
       ),
     );

@@ -35,10 +35,20 @@ class _LoginPageState extends State<LoginPage> {
         child: Builder(builder: (context) {
           return BlocListener<LoginBloc, LoginState>(
               listener: (context, state) {
-                if (state.isSuccess) {
+                if (state is LoginSuccess) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => DashboardPageView()),
+                  );
+                }
+
+                if (state is LoginError) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.message),
+                      backgroundColor: Colors.red,
+                    ),
                   );
                 }
               },
@@ -70,9 +80,10 @@ class _LoginPageState extends State<LoginPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const SizedBox(height: 150),
+                                Image.asset('assets/images/logo.png', height: 200),
+                                SizedBox(height: 50),
                                 const Text(
                                   'Login',
                                   style: TextStyle(
@@ -130,18 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: const Text(
-                                      'Forget Password?',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 30),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.redAccent,
