@@ -1,10 +1,9 @@
 part of 'home_cubit.dart';
 
-sealed class HomeState extends Equatable {
-  const HomeState();
+class HomeState extends Equatable {
+  final int selectedIndex;
+  const HomeState({required this.selectedIndex});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [selectedIndex];
 }
-
-final class HomeInitial extends HomeState {}

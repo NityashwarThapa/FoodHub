@@ -6,6 +6,8 @@ import 'package:food_hub/features/auth/domain/repository/auth_repository.dart';
 import 'package:food_hub/features/auth/domain/use_case/login_use_case.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../cart/unit_test/unit_test.mocks.dart';
+
 class MockAuthRepository extends Mock implements IAuthRepository {}
 
 class MockTokenSharedPrefs extends Mock implements TokenSharedPrefs {}
@@ -14,20 +16,18 @@ void main() {
   late MockAuthRepository repository;
   late MockTokenSharedPrefs tokenSharedPrefs;
   late LoginUsecase usecase;
+  late MockDio dio;
 
   setUp(() {
     repository = MockAuthRepository();
     tokenSharedPrefs = MockTokenSharedPrefs();
-    usecase = LoginUsecase(
-        authRepository: repository, tokenSharedPrefs: tokenSharedPrefs);
+    dio = MockDio();
+    usecase = LoginUsecase(authRepository: repository, tokenSharedPrefs: tokenSharedPrefs, dio: dio);
 
-    registerFallbackValue(
-        const LoginUserParams(email: 'test@gmail.com', password: 'test123'));
+    registerFallbackValue(const LoginUserParams(email: 'test@gmail.com', password: 'test123'));
   });
 
-  test(
-      'should call the [AuthRepo.login] with correct email and password (anjali@gmail.com, anjali123)',
-      () async {
+  test('should call the [AuthRepo.login] with correct email and password (anjali@gmail.com, anjali123)', () async {
     when(() => repository.loginUser(any(), any())).thenAnswer(
       (invocation) async {
         final email = invocation.positionalArguments[0] as String;
@@ -35,8 +35,7 @@ void main() {
         if (email == 'nitu12@gmail.com' && password == 'nitu123') {
           return Future.value(const Right('token'));
         } else {
-          return Future.value(
-              const Left(ApiFailure(message: 'Invalid email or password')));
+          return Future.value(const Left(ApiFailure(message: 'Invalid email or password')));
         }
       },
     );
@@ -45,8 +44,7 @@ void main() {
       (_) async => const Right(null),
     );
 
-    final result = await usecase(
-        const LoginUserParams(email: 'nitu12@gmail.com', password: 'nitu123'));
+    final result = await usecase(const LoginUserParams(email: 'nitu12@gmail.com', password: 'nitu123'));
 
     expect(result, const Right('token'));
 
@@ -63,14 +61,11 @@ void main() {
     const token = 'mock_token';
     const loginParams = LoginUserParams(email: email, password: password);
 
-    when(() => repository.loginUser(any(), any()))
-        .thenAnswer((_) async => const Right(token));
+    when(() => repository.loginUser(any(), any())).thenAnswer((_) async => const Right(token));
 
-    when(() => tokenSharedPrefs.saveToken(any()))
-        .thenAnswer((_) async => const Right(null));
+    when(() => tokenSharedPrefs.saveToken(any())).thenAnswer((_) async => const Right(null));
 
-    when(() => tokenSharedPrefs.getToken())
-        .thenAnswer((_) async => Future.value(const Right(token)));
+    when(() => tokenSharedPrefs.getToken()).thenAnswer((_) async => Future.value(const Right(token)));
 
     final result = await usecase(loginParams);
 
@@ -86,8 +81,7 @@ void main() {
       (_) async => const Left(ApiFailure(message: "Invalid login")),
     );
 
-    final result = await usecase(
-        const LoginUserParams(email: 'wrong@gmail.com', password: 'wrongPass'));
+    final result = await usecase(const LoginUserParams(email: 'wrong@gmail.com', password: 'wrongPass'));
 
     expect(result, const Left(ApiFailure(message: "Invalid login")));
 

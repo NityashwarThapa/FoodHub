@@ -23,12 +23,12 @@ class RegisterUser extends SignupEvent {
   });
 }
 
-// class NavigateLoginScreenEvent extends SignupEvent {
-//   final BuildContext context;
-//   final Widget destination;
+class NavigateLoginScreenEvent extends SignupEvent {
+  final BuildContext context;
+  final Widget destination;
 
-//   const NavigateLoginScreenEvent({
-//     required this.context,
-//     required this.destination,
-//   });
-// }
+  const NavigateLoginScreenEvent({
+    required this.context,
+    required this.destination,
+  });
+}

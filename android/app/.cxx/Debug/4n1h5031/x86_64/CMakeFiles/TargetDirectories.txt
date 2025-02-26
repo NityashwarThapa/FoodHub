@@ -1,0 +1,2 @@
+/Users/roshishshrestha/Documents/Projects/foodhub/FoodHub/android/app/.cxx/Debug/4n1h5031/x86_64/CMakeFiles/edit_cache.dir
+/Users/roshishshrestha/Documents/Projects/foodhub/FoodHub/android/app/.cxx/Debug/4n1h5031/x86_64/CMakeFiles/rebuild_cache.dir

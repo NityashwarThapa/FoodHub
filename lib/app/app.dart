@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:food_hub/app/di/di.dart';
 import 'package:food_hub/core/app_theme/app_theme.dart';
 import 'package:food_hub/features/splash/presentation/view/splash_screen_view.dart';
@@ -10,10 +11,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    EasyLoading.instance
+      ..maskType = EasyLoadingMaskType.black
+      ..userInteractions = false;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Student Management',
+      title: 'FoodHub',
       theme: AppTheme.getApplicationTheme(isDark: false),
+      builder: EasyLoading.init(),
       home: BlocProvider.value(
         value: getIt<SplashCubit>(),
         child: const SplashScreen(),

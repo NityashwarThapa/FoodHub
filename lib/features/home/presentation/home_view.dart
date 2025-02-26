@@ -1,65 +1,87 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:food_hub/view/bottom_view/cart.dart';
-import 'package:food_hub/view/bottom_view/home.dart';
-import 'package:food_hub/view/bottom_view/profile.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_hub/app/di/di.dart';
+import 'package:food_hub/app/shared_prefs/token_shared_prefs.dart';
+import 'package:food_hub/features/auth/presentation/view/login_page_view.dart';
+import 'package:food_hub/features/cart/presentation/view_model/cart_cubit.dart';
+import 'package:food_hub/features/products/presentation/view_model/products/products_cubit.dart';
+import 'package:food_hub/features/profile/presentation/view_model/profile_cubit.dart';
 import 'package:food_hub/view/bottom_view/search.dart';
 
-class DashboardPageView extends StatefulWidget {
-  const DashboardPageView({super.key});
+import '../../cart/presentation/view/cart_page.dart';
+import '../../profile/presentation/view/profile_page.dart';
+import 'view_model/cubit/home_cubit.dart';
 
-  @override
-  State<DashboardPageView> createState() => _DashBoardViewState();
-}
+class DashboardPageView extends StatelessWidget {
+  DashboardPageView({super.key});
 
-class _DashBoardViewState extends State<DashboardPageView> {
-  int _selectedIndex = 0;
-
-  List<Widget> lstBottomScreen = [
-    const Home(),
+  final List<Widget> lstBottomScreen = [
     const Search(),
-    const Cart(),
-    const Profile(),
+    const CartPage(),
+    const ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('DashBoard'),
-        centerTitle: true,
-        backgroundColor: Colors.orangeAccent[100],
-      ),
-      body: lstBottomScreen[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType
-            .fixed, // yo garyo vane matra 4 5 ota icon rakhna pauxa na vaye 3 ta matrapauxa
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<HomeCubit>()),
+        BlocProvider(create: (context) => getIt<ProductsCubit>()..loadProducts()),
+        BlocProvider(create: (context) => getIt<CartCubit>()..getCart()),
+        BlocProvider(create: (context) => getIt<ProfileCubit>()..getProfile()),
+      ],
+      child: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          final int selectedIndex = context.watch<HomeCubit>().state.selectedIndex;
 
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        backgroundColor: Colors.amber,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Food Hub'),
+              centerTitle: true,
+              backgroundColor: Colors.orangeAccent[100],
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () async {
+                    getIt<Dio>().options.headers.remove('Authorization');
+                    getIt<TokenSharedPrefs>().clearToken();
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            body: IndexedStack(
+              index: selectedIndex,
+              children: lstBottomScreen,
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.shopping_cart),
+                  label: 'Cart',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+              ],
+              backgroundColor: Colors.amber,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.black,
+              currentIndex: selectedIndex,
+              onTap: context.read<HomeCubit>().changeIndex,
+            ),
+          );
         },
       ),
     );

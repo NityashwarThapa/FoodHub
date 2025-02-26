@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:food_hub/core/error/failure.dart';
-import 'package:food_hub/features/auth/data/data_source/remote_datasource/remote_datasource.dart';
+import 'package:food_hub/features/auth/data/data_source/auth_data_source.dart';
 import 'package:food_hub/features/auth/domain/entity/auth_entity.dart';
 import 'package:food_hub/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRemoteRepository implements IAuthRepository {
-  final AuthRemoteDataSource _authRemoteDataSource;
+  final IAuthDataSource _authRemoteDataSource;
 
   AuthRemoteRepository(this._authRemoteDataSource);
 
@@ -18,8 +18,7 @@ class AuthRemoteRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> loginUser(
-      String email, String password) async {
+  Future<Either<Failure, String>> loginUser(String email, String password) async {
     try {
       final student = await _authRemoteDataSource.loginUser(email, password);
       return Right(student);

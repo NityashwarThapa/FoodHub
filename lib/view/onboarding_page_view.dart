@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_hub/app/di/di.dart';
+import 'package:food_hub/app/shared_prefs/onboarding_shared_prefs.dart';
+
+import '../features/auth/presentation/view/signup_page_view.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
 
   @override
-  _OnboardingPageState createState() => _OnboardingPageState();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
@@ -118,8 +122,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
             onPressed: () {
               if (_currentPage == onboardingData.length - 1) {
-                // Navigate to the LoginPage
-                Navigator.pushReplacementNamed(context, '/signup');
+                getIt<OnboardingSharedPrefs>().saveFirstTime();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpPage()));
               } else {
                 // Go to the next page
                 _pageController.nextPage(
@@ -129,9 +133,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               }
             },
             child: Text(
-              _currentPage == onboardingData.length - 1
-                  ? 'Get Started'
-                  : 'Next',
+              _currentPage == onboardingData.length - 1 ? 'Get Started' : 'Next',
               style: const TextStyle(fontSize: 16),
             ),
           ),

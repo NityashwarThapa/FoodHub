@@ -14,7 +14,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Call the Cubit to handle navigation after a delay
     context.read<SplashCubit>().init(context);
   }
 

@@ -19,19 +19,12 @@ class MockLoginUserUsecase extends Mock implements LoginUsecase {}
 
 void main() {
   late LoginBloc loginBloc;
-  late SignupBloc registerBloc;
-  late HomeCubit homeCubit;
   late LoginUsecase loginUserUsecase;
 
   setUp(() {
-    registerBloc = MockRegisterBloc();
-    homeCubit = MockHomeCubit();
     loginUserUsecase = MockLoginUserUsecase();
 
-    loginBloc = LoginBloc(
-      signupBloc: registerBloc,
-      loginUseCase: loginUserUsecase,
-    );
+    loginBloc = LoginBloc(loginUserUsecase);
   });
 
   testWidgets('Email and Password Validation', (WidgetTester tester) async {
@@ -61,8 +54,7 @@ void main() {
     expect(find.text('nitu123'), findsOneWidget);
   });
 
-  testWidgets('Invalid Email and Password Validation',
-      (WidgetTester tester) async {
+  testWidgets('Invalid Email and Password Validation', (WidgetTester tester) async {
     // Wrap the test with the required providers
     await tester.pumpWidget(
       MaterialApp(

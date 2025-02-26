@@ -24,7 +24,7 @@ class AuthRemoteDataSource implements IAuthDataSource {
       );
 
       if (response.statusCode == 200) {
-        return response.data['token'];
+        return response.data['data']['token'];
       } else {
         throw Exception('Failed to login: ${response.statusMessage}');
       }
