@@ -14,6 +14,7 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Future<CartData> getCart(CartRequest cartRequest) async {
     final res = await remoteDatasource.getCart(cartRequest);
+
     return res.data;
   }
 

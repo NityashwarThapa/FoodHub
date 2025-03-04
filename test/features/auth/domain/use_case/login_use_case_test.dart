@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:food_hub/app/shared_prefs/token_shared_prefs.dart';
 import 'package:food_hub/core/error/failure.dart';
@@ -6,7 +7,7 @@ import 'package:food_hub/features/auth/domain/repository/auth_repository.dart';
 import 'package:food_hub/features/auth/domain/use_case/login_use_case.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../cart/unit_test/unit_test.mocks.dart';
+import 'dio.dart';
 
 class MockAuthRepository extends Mock implements IAuthRepository {}
 
@@ -22,17 +23,23 @@ void main() {
     repository = MockAuthRepository();
     tokenSharedPrefs = MockTokenSharedPrefs();
     dio = MockDio();
+    dio.options = BaseOptions(
+      baseUrl: 'https://example.com',
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 3),
+    );
+
     usecase = LoginUsecase(authRepository: repository, tokenSharedPrefs: tokenSharedPrefs, dio: dio);
 
     registerFallbackValue(const LoginUserParams(email: 'test@gmail.com', password: 'test123'));
   });
 
-  test('should call the [AuthRepo.login] with correct email and password (anjali@gmail.com, anjali123)', () async {
+  test('should call the [AuthRepo.login] with correct email and password (correct@gmail.com and correct123)', () async {
     when(() => repository.loginUser(any(), any())).thenAnswer(
       (invocation) async {
         final email = invocation.positionalArguments[0] as String;
         final password = invocation.positionalArguments[1] as String;
-        if (email == 'nitu12@gmail.com' && password == 'nitu123') {
+        if (email == 'correct@gmail.com' && password == 'correct123') {
           return Future.value(const Right('token'));
         } else {
           return Future.value(const Left(ApiFailure(message: 'Invalid email or password')));
@@ -44,7 +51,7 @@ void main() {
       (_) async => const Right(null),
     );
 
-    final result = await usecase(const LoginUserParams(email: 'nitu12@gmail.com', password: 'nitu123'));
+    final result = await usecase(const LoginUserParams(email: 'correct@gmail.com', password: 'correct123'));
 
     expect(result, const Right('token'));
 
@@ -73,7 +80,6 @@ void main() {
 
     verify(() => repository.loginUser(email, password)).called(1);
     verify(() => tokenSharedPrefs.saveToken(token)).called(1);
-    // verify(() => tokenSharedPrefs.getToken()).called(1);
   });
 
   test('should return a failure when login fails', () async {

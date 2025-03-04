@@ -2,17 +2,21 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:food_hub/core/error/failure.dart';
+import 'package:food_hub/core/network/internet_checker.dart';
 import 'package:food_hub/features/auth/data/data_source/auth_data_source.dart';
 import 'package:food_hub/features/auth/domain/entity/auth_entity.dart';
 import 'package:food_hub/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRemoteRepository implements IAuthRepository {
+  final InternetChecker internetChecker;
   final IAuthDataSource _authRemoteDataSource;
 
-  AuthRemoteRepository(this._authRemoteDataSource);
+  AuthRemoteRepository(this._authRemoteDataSource, this.internetChecker);
 
   @override
   Future<Either<Failure, String>> loginUser(String email, String password) async {
+    if (!await internetChecker.isConnected) return Left(NoInternetFailure());
+
     try {
       final student = await _authRemoteDataSource.loginUser(email, password);
       return Right(student);
@@ -23,6 +27,8 @@ class AuthRemoteRepository implements IAuthRepository {
 
   @override
   Future<Either<Failure, String>> registerUser(AuthEntity user) async {
+    if (!await internetChecker.isConnected) return Left(NoInternetFailure());
+
     try {
       final res = await _authRemoteDataSource.registerUser(user);
       return Right(res);

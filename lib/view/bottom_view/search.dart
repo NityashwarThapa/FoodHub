@@ -245,7 +245,7 @@ class _SearchState extends State<Search> {
                       Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
                       const SizedBox(height: 16),
                       Text(
-                        'Error: ${state.message}',
+                        state.message,
                         style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                         textAlign: TextAlign.center,
                       ),

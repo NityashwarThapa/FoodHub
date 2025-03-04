@@ -34,17 +34,15 @@ void main() {
     // image: registerParams.image,
   );
 
-  test('should call registerUser in the repository with correct params',
-      () async {
+  test('should call registerUser in the repository with correct params', () async {
     // Arrange
-    when(() => repository.registerUser(authEntity))
-        .thenAnswer((_) async => const Right(null));
+    when(() => repository.registerUser(authEntity)).thenAnswer((_) async => const Right('Register Successfully!'));
 
     // Act
     final result = await useCase(registerParams);
 
     // Assert
-    expect(result, const Right(null));
+    expect(result, const Right('Register Successfully!'));
     verify(() => repository.registerUser(authEntity)).called(1);
     verifyNoMoreInteractions(repository);
   });
@@ -52,8 +50,7 @@ void main() {
   test('should return Left(Failure) when registration fails', () async {
     // Arrange
     const failure = ApiFailure(message: 'Registration failed');
-    when(() => repository.registerUser(authEntity))
-        .thenAnswer((_) async => const Left(failure));
+    when(() => repository.registerUser(authEntity)).thenAnswer((_) async => const Left(failure));
 
     // Act
     final result = await useCase(registerParams);

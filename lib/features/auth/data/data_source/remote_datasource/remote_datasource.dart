@@ -17,13 +17,11 @@ class AuthRemoteDataSource implements IAuthDataSource {
         data: {'email': email, 'password': password},
       );
 
-      if (response.statusCode == 200) {
-        return response.data['data']['token'];
-      } else {
-        throw Exception(response.data['msg']);
-      }
+      if (response.statusCode == 200) return response.data['data']['token'];
+
+      throw Exception(response.data['msg']);
     } on DioException catch (e) {
-      throw Exception('Network error during login: ${e.message}');
+      throw Exception(e.message);
     } catch (e) {
       rethrow;
     }
@@ -38,16 +36,11 @@ class AuthRemoteDataSource implements IAuthDataSource {
         data: userApiModel.toJson(),
       );
 
-      if (response.statusCode == 409) {
-        throw Exception(response.data['msg']);
-      }
+      if (response.statusCode == 200) return response.data['msg'];
 
-      if (response.statusCode != 201) {
-        throw Exception('Failed to register: ${response.statusMessage}');
-      }
-      return response.data['msg'];
+      throw Exception(response.data['msg']);
     } on DioException catch (e) {
-      throw Exception('Network error during registration: ${e.message}');
+      throw Exception(e.message);
     } catch (e) {
       rethrow;
     }

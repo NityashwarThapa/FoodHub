@@ -337,13 +337,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         children: [
           Row(
             children: [
-              CircleAvatar(radius: 20, backgroundImage: CachedNetworkImageProvider(review.user.image ?? '')),
+              CircleAvatar(
+                  radius: 20,
+                  backgroundImage: CachedNetworkImageProvider(
+                    review.user?.image ??
+                        'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
+                  )),
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    review.user.name,
+                    review.user?.name ?? 'Deleted User',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

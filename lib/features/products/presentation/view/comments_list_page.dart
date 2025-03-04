@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub/features/products/domain/entities/review.dart';
 
@@ -30,14 +31,17 @@ class AllCommentsPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 20,
-                      backgroundImage: NetworkImage(comments[index].user.image ?? ''),
+                      backgroundImage: CachedNetworkImageProvider(
+                        comments[index].user?.image ??
+                            'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          comments[index].user.name,
+                          comments[index].user?.name ?? 'Deleted User',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,

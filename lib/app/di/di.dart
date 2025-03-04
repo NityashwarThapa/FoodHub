@@ -26,8 +26,10 @@ import 'package:food_hub/features/profile/domain/usecases/update_profile.dart';
 import 'package:food_hub/features/profile/domain/usecases/update_profile_picture.dart';
 import 'package:food_hub/features/splash/presentation/view_model/cubit/splash_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/network/internet_checker.dart';
 import '../../features/auth/data/data_source/auth_data_source.dart';
 import '../../features/cart/data/repositories/cart_repository_impl.dart';
 import '../../features/cart/domain/repositories/cart_repository.dart';
@@ -69,6 +71,8 @@ _initApiService() {
   getIt.registerLazySingleton<Dio>(
     () => ApiService(Dio()).dio,
   );
+
+  getIt.registerLazySingleton<InternetChecker>(() => InternetCheckerImpl(InternetConnection.createInstance()));
 }
 
 _initSignupDependencies() async {
@@ -96,7 +100,7 @@ _initSignupDependencies() async {
   getIt.registerFactory<IAuthDataSource>(() => AuthRemoteDataSource(getIt<Dio>()));
 
   //Repo Remotre
-  getIt.registerLazySingleton<IAuthRepository>(() => AuthRemoteRepository(getIt()));
+  getIt.registerLazySingleton<IAuthRepository>(() => AuthRemoteRepository(getIt(), getIt()));
 
   getIt.registerFactory<SignupBloc>(
     () => SignupBloc(registerUseCase: getIt()),

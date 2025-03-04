@@ -4,7 +4,7 @@ class Review {
   Review({
     required this.id,
     required this.product,
-    required this.user,
+    this.user,
     required this.rating,
     required this.message,
     required this.createdAt,
@@ -13,7 +13,7 @@ class Review {
 
   final String id;
   final String product;
-  final Profile user;
+  Profile? user;
   final int rating;
   final String message;
   final DateTime createdAt;
@@ -22,7 +22,7 @@ class Review {
   factory Review.fromJson(Map<String, dynamic> json) => Review(
         id: json["_id"],
         product: json["product"],
-        user: Profile.fromJson(json["user"]),
+        user: json["user"] == null ? null : Profile.fromJson(json["user"]),
         rating: json["rating"],
         message: json["message"],
         createdAt: DateTime.parse(json["createdAt"]),
